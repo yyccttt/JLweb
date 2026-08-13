@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import {
   ArrowUpRight,
   Briefcase,
@@ -8,10 +8,7 @@ import {
   IdentificationCard,
   X,
 } from '@phosphor-icons/react'
-import { Canvas } from '@react-three/fiber'
-import { CameraControls, Environment, Html, useGLTF, useProgress } from '@react-three/drei'
-
-const MODEL_URL = `${import.meta.env.BASE_URL}models/yuan-cheng.glb`
+const Scene3D = lazy(() => import('./Scene3D.jsx'))
 
 const views = {
   profile: {
@@ -126,59 +123,6 @@ const skillGroups = [
   { name: '企业应用', items: ['钉钉后台管理', '钉钉应用开发', '用友 U8 ERP', 'Shopify', 'REST API'] },
   { name: '工程协作', items: ['Git', 'GitHub', 'Gitee', 'Issue / PR', 'GitHub Actions', 'Render'] },
 ]
-
-function Model() {
-  const { scene } = useGLTF(MODEL_URL, true)
-  return <primitive object={scene} position={[0.03, -1.09, 0]} rotation={[0, -0.03, 0]} scale={1.95} />
-}
-
-function CameraRig({ activeView }) {
-  const controls = useRef(null)
-  const view = views[activeView]
-
-  useEffect(() => {
-    if (!controls.current) return
-    controls.current.setLookAt(...view.camera, ...view.target, true)
-  }, [view])
-
-  return <CameraControls ref={controls} makeDefault minDistance={1.45} maxDistance={4.5} />
-}
-
-function LoadingScene() {
-  return <Html center><span className="canvas-loading">读取模型</span></Html>
-}
-
-function Scene({ activeView }) {
-  return (
-    <Canvas
-      camera={{ position: views.profile.camera, fov: 34, near: 0.1, far: 100 }}
-      dpr={[1, 1.65]}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-      onCreated={({ gl }) => { gl.toneMappingExposure = 0.78 }}
-    >
-      <ambientLight intensity={0.62} color="#ffffff" />
-      <directionalLight position={[4, 5, 4]} intensity={1.9} color="#fff4ed" />
-      <directionalLight position={[-4, 2, 1]} intensity={0.48} color="#ffffff" />
-      <pointLight position={[0, 0.45, 2.2]} intensity={0.62} distance={4} decay={2} color="#ffc6b5" />
-      <Suspense fallback={<LoadingScene />}>
-        <Model />
-        <Environment preset="studio" environmentIntensity={0.24} />
-      </Suspense>
-      <CameraRig activeView={activeView} />
-    </Canvas>
-  )
-}
-
-function LoadingOverlay() {
-  const { active, progress } = useProgress()
-  if (!active && progress === 100) return null
-  return (
-    <div className="loading-overlay" aria-live="polite">
-      <span>正在建立 3D 空间</span><strong>{Math.round(progress)}%</strong>
-      <div className="loading-line" style={{ '--progress': `${progress}%` }} />
-    </div>
-  )
-}
 
 function FloatingNav({ activeView, onChange }) {
   return (
@@ -300,7 +244,30 @@ function InfoPanel({ activeView, onClose }) {
 export default function App() {
   const [activeView, setActiveView] = useState('profile')
   const [panelOpen, setPanelOpen] = useState(true)
+  const [loadScene, setLoadScene] = useState(false)
   const handleViewChange = (view) => { setActiveView(view); setPanelOpen(true) }
+
+  useEffect(() => {
+    let idleId
+    let timerId
+    const begin = () => setLoadScene(true)
+    const schedule = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(begin, { timeout: 1200 })
+      } else {
+        timerId = window.setTimeout(begin, 150)
+      }
+    }
+
+    if (document.readyState === 'complete') schedule()
+    else window.addEventListener('load', schedule, { once: true })
+
+    return () => {
+      window.removeEventListener('load', schedule)
+      if (idleId) window.cancelIdleCallback(idleId)
+      if (timerId) window.clearTimeout(timerId)
+    }
+  }, [])
 
   return (
     <main className="experience-shell">
@@ -308,8 +275,14 @@ export default function App() {
         <button type="button" className="wordmark" onClick={() => handleViewChange('profile')}>YUAN<span>CHENG</span></button>
         <p>计算机专业 / 全栈开发 / 3D WEB</p>
       </header>
-      <div className="scene-layer" aria-label="袁诚的 3D 人物模型"><Scene activeView={activeView} /></div>
-      <LoadingOverlay />
+      <div className="scene-layer" aria-label="袁诚的 3D 人物模型">
+        <div className="scene-placeholder" aria-hidden="true" />
+        {loadScene && (
+          <Suspense fallback={<div className="model-status">正在载入 3D 人物</div>}>
+            <Scene3D activeView={activeView} views={views} />
+          </Suspense>
+        )}
+      </div>
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
       {panelOpen && <InfoPanel activeView={activeView} onClose={() => setPanelOpen(false)} />}
       <div className="model-caption" aria-hidden="true"><span>拖动模型查看视角</span></div>
@@ -317,5 +290,3 @@ export default function App() {
     </main>
   )
 }
-
-useGLTF.preload(MODEL_URL, true)
