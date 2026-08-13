@@ -1,14 +1,14 @@
 :root {
   font-family: 'Arial Narrow', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
-  color: #eeefe9;
-  background: #11120f;
+  color: #252a27;
+  background: #e8edeb;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --ink: #11120f;
-  --paper: #eeefe9;
-  --muted: #9b9e94;
-  --acid: #c8ef4d;
-  --hairline: rgba(238, 239, 233, 0.2);
+  --ink: #252a27;
+  --paper: #edf1ef;
+  --muted: #6f7772;
+  --accent: #60766a;
+  --hairline: rgba(37, 42, 39, 0.18);
 }
 
 * {
@@ -35,7 +35,7 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--acid);
+  outline: 2px solid var(--accent);
   outline-offset: 5px;
 }
 
@@ -45,8 +45,8 @@ a:focus-visible {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 50% 42%, rgba(57, 61, 48, 0.35), transparent 36%),
-    var(--ink);
+    radial-gradient(circle at 50% 40%, rgba(250, 252, 250, 0.96) 0 22%, rgba(226, 233, 229, 0.84) 48%, transparent 72%),
+    linear-gradient(135deg, #edf1ef 0%, #dfe7e3 100%);
 }
 
 .experience-shell::before {
@@ -68,7 +68,7 @@ a:focus-visible {
   justify-content: space-between;
   padding: 0 1.35rem;
   border-bottom: 1px solid var(--hairline);
-  background: rgba(17, 18, 15, 0.82);
+  background: rgba(237, 241, 239, 0.78);
   backdrop-filter: blur(14px);
 }
 
@@ -83,7 +83,7 @@ a:focus-visible {
 .wordmark {
   padding: 0;
   border: 0;
-  color: var(--paper);
+  color: var(--ink);
   background: transparent;
   cursor: pointer;
   font-size: 1.1rem;
@@ -92,7 +92,7 @@ a:focus-visible {
 }
 
 .wordmark span {
-  color: var(--acid);
+  color: var(--accent);
 }
 
 .scene-layer {
@@ -117,11 +117,11 @@ a:focus-visible {
   min-width: 8.5rem;
   padding: 0.72rem 0;
   border: 0;
-  border-bottom: 1px solid var(--paper);
-  color: var(--paper);
+  border-bottom: 1px solid rgba(37, 42, 39, 0.42);
+  color: var(--ink);
   background: transparent;
   text-align: left;
-  text-shadow: 0 2px 14px var(--ink), 0 1px 2px var(--ink);
+  text-shadow: 0 2px 16px rgba(237, 241, 239, 0.9);
   cursor: pointer;
   pointer-events: auto;
   transition: color 240ms ease, border-color 240ms ease, transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -129,8 +129,8 @@ a:focus-visible {
 
 .view-button:hover,
 .view-button.is-active {
-  color: var(--acid);
-  border-color: var(--acid);
+  color: var(--accent);
+  border-color: var(--accent);
   transform: translateY(-4px);
 }
 
@@ -184,9 +184,10 @@ a:focus-visible {
   bottom: 1.25rem;
   width: min(35rem, calc(100vw - 2.5rem));
   padding: 1.55rem 1.7rem 1.7rem;
-  border-top: 1px solid var(--paper);
-  background: rgba(17, 18, 15, 0.88);
-  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(37, 42, 39, 0.5);
+  background: rgba(237, 241, 239, 0.84);
+  backdrop-filter: blur(22px) saturate(115%);
+  box-shadow: 0 -18px 50px rgba(70, 83, 76, 0.08);
   animation: panel-in 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -201,20 +202,20 @@ a:focus-visible {
   padding: 0;
   border: 1px solid var(--hairline);
   border-radius: 50%;
-  color: var(--paper);
-  background: var(--ink);
+  color: var(--ink);
+  background: rgba(237, 241, 239, 0.92);
   cursor: pointer;
   transition: transform 180ms ease, color 180ms ease;
 }
 
 .panel-close:hover {
-  color: var(--acid);
+  color: var(--accent);
   transform: rotate(7deg);
 }
 
 .eyebrow {
   margin: 0 0 0.7rem;
-  color: var(--acid);
+  color: var(--accent);
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -222,7 +223,7 @@ a:focus-visible {
 
 .info-panel h1 {
   margin: 0;
-  max-width: 12ch;
+  max-width: none;
   font-size: clamp(2.15rem, 4.3vw, 4.6rem);
   font-weight: 800;
   line-height: 0.92;
@@ -236,7 +237,7 @@ a:focus-visible {
 .panel-copy {
   max-width: 36rem;
   margin: 1rem 0 0;
-  color: #c4c6bd;
+  color: #59615c;
   font-size: clamp(0.82rem, 1.1vw, 1rem);
   line-height: 1.65;
 }
@@ -248,8 +249,8 @@ a:focus-visible {
   margin-top: 1.1rem;
   padding: 0.75rem 1rem;
   border-radius: 999px;
-  color: var(--ink);
-  background: var(--acid);
+  color: #f3f5f3;
+  background: var(--accent);
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 800;
@@ -286,24 +287,24 @@ a:focus-visible {
   grid-template-columns: 1fr auto;
   gap: 0.7rem;
   padding: 12vw;
-  color: var(--paper);
-  background: var(--ink);
+  color: var(--ink);
+  background: #e8edeb;
   font-size: clamp(1.1rem, 2vw, 2rem);
   font-weight: 800;
 }
 
 .loading-overlay strong {
-  color: var(--acid);
+  color: var(--accent);
 }
 
 .loading-line {
   grid-column: 1 / -1;
   height: 2px;
-  background: linear-gradient(90deg, var(--acid) var(--progress), rgba(238, 239, 233, 0.15) var(--progress));
+  background: linear-gradient(90deg, var(--accent) var(--progress), rgba(37, 42, 39, 0.12) var(--progress));
 }
 
 .canvas-loading {
-  color: var(--paper);
+  color: var(--ink);
   white-space: nowrap;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
@@ -314,7 +315,7 @@ a:focus-visible {
   inset: 0;
   z-index: 20;
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
   transform: translateZ(0);
 }
@@ -419,7 +420,7 @@ a:focus-visible {
 @media (prefers-reduced-transparency: reduce) {
   .site-header,
   .info-panel {
-    background: var(--ink);
+    background: #e8edeb;
     backdrop-filter: none;
   }
 }
