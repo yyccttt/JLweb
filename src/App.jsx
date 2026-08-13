@@ -193,7 +193,7 @@ function FloatingNav({ activeView, onChange }) {
 }
 
 function ProjectList() {
-  const [expanded, setExpanded] = useState(0)
+  const [expanded, setExpanded] = useState(-1)
   return (
     <div className="project-list">
       {projects.map((project, index) => {
