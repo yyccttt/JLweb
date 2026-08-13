@@ -3,9 +3,11 @@ import {
   ArrowUpRight,
   Briefcase,
   Code,
+  EnvelopeSimple,
   GithubLogo,
   GraduationCap,
   IdentificationCard,
+  Phone,
   X,
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
@@ -291,7 +293,16 @@ function PanelContent({ activeView }) {
   }
   return (
     <div className="contact-content">
-      <p>GitHub <strong>@yyccttt</strong></p>
+      <div className="contact-list">
+        <a href="tel:15772200132">
+          <Phone size={19} weight="bold" />
+          <span><small>电话</small><strong>157 7220 0132</strong></span>
+        </a>
+        <a href="mailto:yc2164241187@qq.com">
+          <EnvelopeSimple size={19} weight="bold" />
+          <span><small>邮箱</small><strong>yc2164241187@qq.com</strong></span>
+        </a>
+      </div>
       <a className="contact-link" href="https://github.com/yyccttt" target="_blank" rel="noreferrer">
         <GithubLogo size={20} weight="bold" />查看公开项目<ArrowUpRight size={17} weight="bold" />
       </a>
