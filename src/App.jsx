@@ -6,45 +6,60 @@ import { CameraControls, Environment, Html, useGLTF, useProgress } from '@react-
 const MODEL_URL = '/models/yuan-cheng.glb'
 
 const views = {
-  hello: {
-    label: '你好',
-    hint: '先看正面',
-    className: 'nav-hello',
+  profile: {
+    label: '个人简介',
+    hint: '专业方向',
+    className: 'nav-profile',
     camera: [0, 0.18, 3.35],
     target: [0, 0.08, 0],
-    eyebrow: 'HELLO, I AM YUAN CHENG',
-    title: '把想法做成\n可以体验的东西。',
-    body: '我关注产品、视觉和代码之间的连接。这个空间用一个 3D 的我，替代一张普通头像。',
+    eyebrow: 'COMPUTER SCIENCE STUDENT',
+    title: '计算机专业，\n也做完整产品。',
+    body: '以软件开发为核心，正在把课程知识、工程实践和个人项目整理成可验证的作品。',
+    facts: ['软件开发', '产品实践', '3D Web', '持续学习'],
   },
-  about: {
-    label: '关于我',
-    hint: '靠近一点',
-    className: 'nav-about',
+  skills: {
+    label: '技术能力',
+    hint: '工具与语言',
+    className: 'nav-skills',
     camera: [1.45, 0.42, 2.15],
     target: [0, 0.22, 0],
-    eyebrow: 'ABOUT ME',
-    title: '设计感觉，\n也设计系统。',
-    body: '我喜欢清晰的结构，也喜欢不那么规矩的表达。目标始终一样，让复杂的东西变得自然。',
+    eyebrow: 'TECHNICAL SKILLS',
+    title: '从代码基础，\n到浏览器里的 3D。',
+    body: '围绕前端开发和计算机专业基础构建能力，并使用版本控制完成真实项目。',
+    facts: ['JavaScript / React', 'Three.js / WebGL', 'Git / GitHub', '数据结构与算法'],
   },
-  work: {
-    label: '项目',
-    hint: '换个角度',
-    className: 'nav-work',
+  projects: {
+    label: '项目经历',
+    hint: '做过什么',
+    className: 'nav-projects',
     camera: [-1.55, 0.12, 2.25],
     target: [0, 0.04, 0],
-    eyebrow: 'SELECTED WORK',
-    title: '网页、产品，\n还有实验。',
-    body: '这里会放进真实项目、过程和结果。不是项目清单，而是我如何思考和解决问题的现场。',
+    eyebrow: 'PROJECT EXPERIENCE',
+    title: '项目不只展示结果，\n也展示解决过程。',
+    body: 'JLweb 是当前核心项目，将优化后的 3D 模型、响应式界面和镜头交互整合为个人简历网站。',
+    facts: ['React + Three.js', 'GLB 模型优化', '响应式交互', 'GitHub 持续同步'],
+  },
+  education: {
+    label: '教育背景',
+    hint: '学习路径',
+    className: 'nav-education',
+    camera: [1.2, 0.72, 2.05],
+    target: [0, 0.38, 0],
+    eyebrow: 'EDUCATION',
+    title: '计算机专业课程，\n连接工程实践。',
+    body: '学习内容覆盖编程基础、算法、数据库和计算机网络，并通过个人项目持续实践。',
+    facts: ['程序设计基础', '数据库系统', '计算机网络', '软件工程'],
   },
   contact: {
-    label: '联系我',
-    hint: '面对面聊',
+    label: '联系方式',
+    hint: '保持联系',
     className: 'nav-contact',
     camera: [0.18, 0.78, 1.82],
     target: [0, 0.47, 0],
-    eyebrow: 'LET US TALK',
-    title: '有好玩的事，\n一起做。',
-    body: '如果你正在做一个值得投入的产品、品牌或数字体验，欢迎把想法发给我。',
+    eyebrow: 'CONTACT',
+    title: '查看代码，\n也欢迎交流。',
+    body: '项目源码和后续更新会持续发布在 GitHub，目前可以通过主页了解我的公开项目。',
+    facts: ['GitHub：@yyccttt'],
   },
 }
 
@@ -84,7 +99,7 @@ function LoadingScene() {
 function Scene({ activeView }) {
   return (
     <Canvas
-      camera={{ position: views.hello.camera, fov: 34, near: 0.1, far: 100 }}
+      camera={{ position: views.profile.camera, fov: 34, near: 0.1, far: 100 }}
       dpr={[1, 1.65]}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
@@ -148,6 +163,11 @@ function InfoPanel({ activeView, onClose }) {
       <p className="eyebrow">{item.eyebrow}</p>
       <h1>{item.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
       <p className="panel-copy">{item.body}</p>
+      {item.facts && (
+        <ul className="resume-facts" aria-label={`${item.label}要点`}>
+          {item.facts.map((fact) => <li key={fact}>{fact}</li>)}
+        </ul>
+      )}
       {isContact && (
         <a className="contact-link" href="https://github.com/yyccttt" target="_blank" rel="noreferrer">
           <GithubLogo size={19} weight="bold" />
@@ -160,7 +180,7 @@ function InfoPanel({ activeView, onClose }) {
 }
 
 export default function App() {
-  const [activeView, setActiveView] = useState('hello')
+  const [activeView, setActiveView] = useState('profile')
   const [panelOpen, setPanelOpen] = useState(true)
 
   const handleViewChange = (view) => {
@@ -171,10 +191,10 @@ export default function App() {
   return (
     <main className="experience-shell">
       <header className="site-header">
-        <button type="button" className="wordmark" onClick={() => handleViewChange('hello')}>
+        <button type="button" className="wordmark" onClick={() => handleViewChange('profile')}>
           YUAN<span>CHENG</span>
         </button>
-        <p>个人作品集 / 2026</p>
+        <p>计算机专业 / 个人简历</p>
       </header>
 
       <div className="scene-layer" aria-label="袁程的 3D 人物模型">

@@ -157,19 +157,24 @@ a:focus-visible {
   letter-spacing: 0.08em;
 }
 
-.nav-hello {
+.nav-profile {
   top: 8%;
   left: 6%;
 }
 
-.nav-about {
-  top: 23%;
+.nav-skills {
+  top: 20%;
   right: 7%;
 }
 
-.nav-work {
+.nav-projects {
   top: 36%;
   left: 7%;
+}
+
+.nav-education {
+  right: 8%;
+  bottom: 30%;
 }
 
 .nav-contact {
@@ -240,6 +245,24 @@ a:focus-visible {
   color: #59615c;
   font-size: clamp(0.82rem, 1.1vw, 1rem);
   line-height: 1.65;
+}
+
+.resume-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 1.4rem;
+  max-width: 30rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-facts li {
+  padding-top: 0.42rem;
+  border-top: 1px solid rgba(37, 42, 39, 0.22);
+  color: #3f4943;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .contact-link {
@@ -351,30 +374,41 @@ a:focus-visible {
 
   .view-button {
     min-width: 6.4rem;
+    padding-inline: 0.45rem;
+    background: rgba(237, 241, 239, 0.58);
+    backdrop-filter: blur(5px);
   }
 
   .view-button span {
     font-size: 1.05rem;
   }
 
-  .nav-hello {
+  .nav-profile {
     top: 5%;
     left: 6%;
   }
 
-  .nav-about {
+  .nav-skills {
     top: 17%;
     right: 6%;
   }
 
-  .nav-work {
-    bottom: 45%;
+  .nav-projects {
+    top: 43%;
+    bottom: auto;
     left: 6%;
   }
 
-  .nav-contact {
+  .nav-education {
+    top: 53%;
     right: 6%;
-    bottom: 36%;
+    bottom: auto;
+  }
+
+  .nav-contact {
+    top: 30%;
+    right: 6%;
+    bottom: auto;
   }
 
   .info-panel {
@@ -394,6 +428,15 @@ a:focus-visible {
     margin-top: 0.7rem;
     font-size: 0.78rem;
     line-height: 1.5;
+  }
+
+  .resume-facts {
+    gap: 0.3rem 0.8rem;
+    margin-top: 0.7rem;
+  }
+
+  .resume-facts li {
+    font-size: 0.64rem;
   }
 
   .panel-close {
