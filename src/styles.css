@@ -189,6 +189,19 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .education-primary h2 { margin-bottom: .3rem; font-size: 1.05rem; }
 .education-primary strong { color: #405048; font-size: .78rem; }
 .education-primary .education-year { margin-bottom: .65rem; color: var(--accent); font-size: .65rem; font-weight: 800; letter-spacing: .08em; }
+.certificate-section { margin-top: .35rem; }
+.certificate-section > h2 { margin: 0 0 .75rem; color: var(--ink); font-size: .8rem; font-weight: 850; }
+.certificate-list { display: grid; gap: .55rem; }
+.certificate-card { display: grid; grid-template-columns: 5rem minmax(0, 1fr) auto; align-items: center; gap: .8rem; min-width: 0; padding: .55rem .7rem .55rem .55rem; border: 1px solid var(--hairline); border-radius: var(--radius); color: var(--ink); background: rgba(255,255,255,.68); text-decoration: none; box-shadow: 0 8px 24px rgba(76,104,89,.05); transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; }
+.certificate-card:hover { transform: translateY(-2px) rotate(-.25deg); border-color: rgba(95,128,111,.42); background: rgba(255,255,255,.9); }
+.certificate-card:active { transform: scale(.985); }
+.certificate-card img { width: 5rem; aspect-ratio: 4 / 3; display: block; object-fit: cover; object-position: center; border-radius: 14px; background: var(--accent-soft); }
+.certificate-copy { min-width: 0; }
+.certificate-copy strong, .certificate-copy small, .certificate-copy em { display: block; }
+.certificate-copy strong { font-size: .73rem; font-weight: 850; line-height: 1.35; }
+.certificate-copy small { margin-top: .2rem; overflow: hidden; color: var(--muted); font-size: .61rem; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.certificate-copy em { margin-top: .35rem; color: var(--accent); font-size: .58rem; font-style: normal; font-weight: 750; }
+.certificate-card > svg { flex: none; color: var(--accent); }
 .contact-content > p { margin: 0; color: #4a554f; font-size: .86rem; }
 .contact-content > p strong { color: var(--ink); }
 .contact-link { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.2rem; padding: .8rem 1.08rem; border-radius: 999px; color: #f7faf8; background: var(--accent); text-decoration: none; font-size: .76rem; font-weight: 850; transition: transform 180ms ease, background 180ms ease; }
@@ -227,6 +240,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .career-grid { grid-template-columns: 1fr; }
   .project-heading { padding: .78rem .85rem; }
   .project-detail { padding: 0 .85rem .85rem; }
+  .certificate-card { grid-template-columns: 4.4rem minmax(0, 1fr) auto; gap: .65rem; }
+  .certificate-card img { width: 4.4rem; }
   .model-caption { display: none; }
 }
 

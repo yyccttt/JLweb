@@ -146,6 +146,30 @@ const skillGroups = [
   { name: '工程协作', items: ['Git', 'GitHub', 'Gitee', 'Issue / PR', 'GitHub Actions', 'Render'] },
 ]
 
+const certificates = [
+  {
+    title: '全国高校计算机能力挑战赛',
+    award: '人工智能挑战赛全国决赛本科组三等奖',
+    date: '2024 年 12 月',
+    image: 'certificates/previews/computer-ability-2024.webp',
+    file: 'certificates/computer-ability-challenge-2024.pdf',
+  },
+  {
+    title: '中国机器人及人工智能大赛',
+    award: '全国总决赛三等奖',
+    date: '2026 年 7 月',
+    image: 'certificates/previews/craic-national-2026.webp',
+    file: 'certificates/craic-2026-national-third-prize.pdf',
+  },
+  {
+    title: '中国机器人及人工智能大赛',
+    award: '贵州赛区一等奖',
+    date: '2026 年 6 月',
+    image: 'certificates/previews/craic-guizhou-2026.webp',
+    file: 'certificates/craic-2026-guizhou-first-prize.pdf',
+  },
+]
+
 function FloatingNav({ activeView, onChange }) {
   return (
     <nav className="floating-nav" aria-label="简历导航">
@@ -235,6 +259,33 @@ function PanelContent({ activeView }) {
         </section>
         <section><h2>专业与实践</h2><p>学习数学与计算机相关课程，并通过企业项目与个人作品持续积累软件开发、数据处理、问题排查和工程协作经验。</p></section>
         <section><h2>发展方向</h2><p>重点关注 AI 软件开发、生成式 AI 工具应用和 AI 短视频内容制作。</p></section>
+        <div className="certificate-section">
+          <h2>荣誉证书</h2>
+          <div className="certificate-list">
+            {certificates.map((certificate) => (
+              <a
+                className="certificate-card"
+                href={`${import.meta.env.BASE_URL}${certificate.file}`}
+                target="_blank"
+                rel="noreferrer"
+                key={`${certificate.title}-${certificate.award}`}
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}${certificate.image}`}
+                  alt={`${certificate.title}${certificate.award}证书预览`}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="certificate-copy">
+                  <strong>{certificate.award}</strong>
+                  <small>{certificate.title}</small>
+                  <em>{certificate.date} / 查看原件</em>
+                </span>
+                <ArrowUpRight size={17} weight="bold" />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     )
   }
