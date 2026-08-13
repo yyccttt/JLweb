@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react'
+import React, { Component, lazy, Suspense, useEffect, useState } from 'react'
 import {
   ArrowUpRight,
   Briefcase,
@@ -9,6 +9,28 @@ import {
   X,
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
+
+class SceneErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { failed: false }
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+
+  render() {
+    if (this.state.failed) {
+      return (
+        <button className="model-retry" type="button" onClick={this.props.onRetry}>
+          3D 加载中断，点击重试
+        </button>
+      )
+    }
+    return this.props.children
+  }
+}
 
 const views = {
   profile: {
@@ -245,29 +267,19 @@ export default function App() {
   const [activeView, setActiveView] = useState('profile')
   const [panelOpen, setPanelOpen] = useState(true)
   const [loadScene, setLoadScene] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
+  const [sceneAttempt, setSceneAttempt] = useState(0)
   const handleViewChange = (view) => { setActiveView(view); setPanelOpen(true) }
 
   useEffect(() => {
-    let idleId
-    let timerId
-    const begin = () => setLoadScene(true)
-    const schedule = () => {
-      if ('requestIdleCallback' in window) {
-        idleId = window.requestIdleCallback(begin, { timeout: 1200 })
-      } else {
-        timerId = window.setTimeout(begin, 150)
-      }
-    }
-
-    if (document.readyState === 'complete') schedule()
-    else window.addEventListener('load', schedule, { once: true })
-
-    return () => {
-      window.removeEventListener('load', schedule)
-      if (idleId) window.cancelIdleCallback(idleId)
-      if (timerId) window.clearTimeout(timerId)
-    }
+    const timerId = window.setTimeout(() => setLoadScene(true), 50)
+    return () => window.clearTimeout(timerId)
   }, [])
+
+  const retryScene = () => {
+    setSceneReady(false)
+    setSceneAttempt((attempt) => attempt + 1)
+  }
 
   return (
     <main className="experience-shell">
@@ -277,10 +289,13 @@ export default function App() {
       </header>
       <div className="scene-layer" aria-label="袁诚的 3D 人物模型">
         <div className="scene-placeholder" aria-hidden="true" />
+        {!sceneReady && <div className="model-progress" role="status">3D 人物正在加载</div>}
         {loadScene && (
-          <Suspense fallback={<div className="model-status">正在载入 3D 人物</div>}>
-            <Scene3D activeView={activeView} views={views} />
-          </Suspense>
+          <SceneErrorBoundary key={sceneAttempt} onRetry={retryScene}>
+            <Suspense fallback={null}>
+              <Scene3D activeView={activeView} views={views} onReady={() => setSceneReady(true)} />
+            </Suspense>
+          </SceneErrorBoundary>
         )}
       </div>
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
