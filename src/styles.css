@@ -145,9 +145,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 
 .profile-copy { display: grid; gap: 1rem; }
 .profile-copy > p { margin: 0; color: #414b46; font-size: .88rem; line-height: 1.85; }
+.career-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+.career-grid section { padding: .85rem; border-radius: var(--radius); background: rgba(255,255,255,.56); border: 1px solid var(--hairline); }
+.career-grid h2 { margin: 0 0 .45rem; color: var(--accent); font-size: .68rem; font-weight: 850; }
+.career-grid p { margin: 0; color: #46524b; font-size: .72rem; line-height: 1.55; }
 .profile-focus { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; margin-top: .35rem; }
 .profile-focus span { padding: .8rem .65rem; border-radius: var(--radius); background: var(--accent-soft); color: #33463c; text-align: center; font-size: .68rem; font-weight: 750; }
 
+.skills-content > p { margin: 0 0 1.25rem; color: #46514b; font-size: .78rem; line-height: 1.7; }
 .skill-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 1.45rem 1.1rem; }
 .skill-groups section { min-width: 0; }
 .skill-groups h2, .education-layout h2 { margin: 0 0 .75rem; color: var(--ink); font-size: .76rem; font-weight: 850; }
@@ -172,6 +177,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .education-layout { display: grid; gap: 1rem; }
 .education-layout section { padding: 1rem; border-radius: var(--radius); background: rgba(255,255,255,.54); border: 1px solid var(--hairline); }
 .education-layout p { margin: 0; color: #4f5a54; font-size: .78rem; line-height: 1.7; }
+.education-primary { position: relative; background: var(--accent-soft) !important; }
+.education-primary h2 { margin-bottom: .3rem; font-size: 1.05rem; }
+.education-primary strong { color: #405048; font-size: .78rem; }
+.education-primary .education-year { margin-bottom: .65rem; color: var(--accent); font-size: .65rem; font-weight: 800; letter-spacing: .08em; }
 .contact-content > p { margin: 0; color: #4a554f; font-size: .86rem; }
 .contact-content > p strong { color: var(--ink); }
 .contact-link { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.2rem; padding: .78rem 1rem; border-radius: var(--radius); color: #f4f6f5; background: var(--accent); text-decoration: none; font-size: .76rem; font-weight: 800; transition: transform 180ms ease, background 180ms ease; }
@@ -211,6 +220,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .panel-body { padding: 1rem 1.2rem 1.3rem; }
   .panel-close { top: .75rem; right: .75rem; width: 2.15rem; height: 2.15rem; }
   .skill-groups { gap: 1.1rem .75rem; }
+  .career-grid { grid-template-columns: 1fr; }
   .project-heading { padding: .78rem .85rem; }
   .project-detail { padding: 0 .85rem .85rem; }
   .model-caption { display: none; }

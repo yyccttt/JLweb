@@ -23,7 +23,7 @@ const views = {
     target: [0, 0.08, 0],
     kicker: 'PROFILE',
     title: '理解业务，\n也交付完整产品。',
-    intro: '计算机相关专业背景，具备企业业务系统与 Web 应用开发实践。',
+    intro: '信息与计算科学专业，聚焦 AI 软件开发、AI 短视频制作与相关应用。',
   },
   skills: {
     label: '技术能力',
@@ -34,7 +34,7 @@ const views = {
     target: [0, 0.22, 0],
     kicker: 'CAPABILITIES',
     title: '从数据和接口，\n到浏览器里的 3D。',
-    intro: '围绕真实业务持续扩展全栈开发、系统集成与交互表达能力。',
+    intro: '以 Python 和 AI 工具为核心，覆盖软件开发、内容制作与企业应用集成。',
   },
   projects: {
     label: '项目经历',
@@ -56,7 +56,7 @@ const views = {
     target: [0, 0.38, 0],
     kicker: 'EDUCATION',
     title: '专业基础，\n连接工程实践。',
-    intro: '计算机相关专业学习，并通过企业项目与个人作品持续实践。',
+    intro: '遵义医科大学信息与计算科学专业，预计 2027 年毕业。',
   },
   contact: {
     label: '联系方式',
@@ -119,9 +119,11 @@ const projects = [
 ]
 
 const skillGroups = [
-  { name: '后端与数据', items: ['Python', 'Flask', 'SQL Server', 'SQLAlchemy', 'Pandas', 'OpenPyXL'] },
+  { name: 'AI 编程工具', items: ['Codex', 'Cursor', 'Grok', 'ZCode', 'Claude Code'] },
+  { name: 'AI 内容制作', items: ['LibTV', '即梦', '可灵', 'AI 短视频', '提示词设计'] },
+  { name: '开发与数据', items: ['Python', 'Flask', 'SQL Server', 'SQLAlchemy', 'Pandas', 'OpenPyXL'] },
   { name: '前端与 3D', items: ['JavaScript', 'React', 'Next.js', 'Three.js', 'HTML', 'CSS'] },
-  { name: '系统集成', items: ['用友 U8 ERP', '钉钉开放平台', 'Shopify', 'REST API'] },
+  { name: '企业应用', items: ['钉钉后台管理', '钉钉应用开发', '用友 U8 ERP', 'Shopify', 'REST API'] },
   { name: '工程协作', items: ['Git', 'GitHub', 'Gitee', 'Issue / PR', 'GitHub Actions', 'Render'] },
 ]
 
@@ -232,21 +234,41 @@ function PanelContent({ activeView }) {
   if (activeView === 'profile') {
     return (
       <div className="profile-copy">
-        <p>参与制造业内部管理平台、会员管理平台及 3D Web 项目开发，能够将财务、采购、销售等业务需求转化为数据查询、后端功能和前端页面。</p>
-        <p>熟悉 Python、Flask、SQL Server、JavaScript 与 React，具备用友 U8、钉钉等系统集成经验。注重从实际问题出发，并持续探索 AI 辅助开发与 Web 3D 技术。</p>
-        <div className="profile-focus"><span>业务型全栈开发</span><span>企业系统集成</span><span>3D Web 实践</span></div>
+        <p>我叫袁诚，毕业于遵义医科大学信息与计算科学专业，预计 2027 年毕业。具备企业业务系统、会员管理平台及 3D Web 项目开发实践。</p>
+        <p>理解能力和动手能力较强，重视需求分析与实际解决问题的能力。希望将对 AI 工具和开发流程的熟悉转化为可落地的产品，用 AI 解决身边的真实问题。</p>
+        <div className="career-grid">
+          <section>
+            <h2>求职方向</h2>
+            <p>AI 软件开发、AI 短视频制作及 AI 相关岗位</p>
+          </section>
+          <section>
+            <h2>职业目标</h2>
+            <p>在 AI 时代持续做出有实际价值、能够被验证的成果。</p>
+          </section>
+        </div>
+        <div className="profile-focus"><span>理解能力强</span><span>动手能力强</span><span>善于解决实际问题</span></div>
       </div>
     )
   }
   if (activeView === 'skills') {
-    return <div className="skill-groups">{skillGroups.map((group) => <section key={group.name}><h2>{group.name}</h2><div>{group.items.map((item) => <span key={item}>{item}</span>)}</div></section>)}</div>
+    return (
+      <div className="skills-content">
+        <p>熟练使用 Codex、Cursor、Grok、ZCode 与 Claude Code 等 AI 工具辅助需求分析、编码、调试和代码审查，并能使用多种生成工具完成 AI 短视频内容制作。</p>
+        <div className="skill-groups">{skillGroups.map((group) => <section key={group.name}><h2>{group.name}</h2><div>{group.items.map((item) => <span key={item}>{item}</span>)}</div></section>)}</div>
+      </div>
+    )
   }
   if (activeView === 'projects') return <ProjectList />
   if (activeView === 'education') {
     return (
       <div className="education-layout">
-        <section><h2>学习方向</h2><p>编程基础、数据结构与算法、数据库系统、计算机网络及软件工程。</p></section>
-        <section><h2>实践方式</h2><p>以真实业务需求和个人项目验证所学内容，持续积累代码实现、问题排查与工程协作经验。</p></section>
+        <section className="education-primary">
+          <p className="education-year">2027 年毕业</p>
+          <h2>遵义医科大学</h2>
+          <strong>信息与计算科学专业</strong>
+        </section>
+        <section><h2>专业与实践</h2><p>学习数学与计算机相关课程，并通过企业项目与个人作品持续积累软件开发、数据处理、问题排查和工程协作经验。</p></section>
+        <section><h2>发展方向</h2><p>重点关注 AI 软件开发、生成式 AI 工具应用和 AI 短视频内容制作。</p></section>
       </div>
     )
   }
@@ -286,7 +308,7 @@ export default function App() {
         <button type="button" className="wordmark" onClick={() => handleViewChange('profile')}>YUAN<span>CHENG</span></button>
         <p>计算机专业 / 全栈开发 / 3D WEB</p>
       </header>
-      <div className="scene-layer" aria-label="袁程的 3D 人物模型"><Scene activeView={activeView} /></div>
+      <div className="scene-layer" aria-label="袁诚的 3D 人物模型"><Scene activeView={activeView} /></div>
       <LoadingOverlay />
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
       {panelOpen && <InfoPanel activeView={activeView} onClose={() => setPanelOpen(false)} />}
