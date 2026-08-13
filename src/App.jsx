@@ -3,7 +3,7 @@ import { ArrowUpRight, GithubLogo, X } from '@phosphor-icons/react'
 import { Canvas } from '@react-three/fiber'
 import { CameraControls, Environment, Html, useGLTF, useProgress } from '@react-three/drei'
 
-const MODEL_URL = '/models/yuan-cheng.glb'
+const MODEL_URL = `${import.meta.env.BASE_URL}models/yuan-cheng.glb`
 
 const views = {
   profile: {
