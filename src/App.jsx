@@ -71,7 +71,7 @@ const views = {
   },
   experience: {
     label: '实习经历',
-    hint: '5 个月',
+    hint: '工作实践',
     icon: Buildings,
     className: 'nav-experience',
     camera: [-1.15, 0.58, 2.12],
