@@ -384,6 +384,8 @@ function ResumeChat() {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [answer, setAnswer] = useState('')
+  const [answerError, setAnswerError] = useState(false)
 
   const sendMessage = async (event) => {
     event.preventDefault()
@@ -393,6 +395,8 @@ function ResumeChat() {
     setMessages(nextMessages)
     setInput('')
     setLoading(true)
+    setAnswer('')
+    setAnswerError(false)
     try {
       const response = await fetch(CHAT_API_URL, {
         method: 'POST',
@@ -402,8 +406,12 @@ function ResumeChat() {
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || '服务暂时不可用')
       setMessages((current) => [...current, { role: 'assistant', content: data.reply }])
+      setAnswer(data.reply)
     } catch (error) {
-      setMessages((current) => [...current, { role: 'assistant', content: error.message || '连接失败，请稍后再试。', error: true }])
+      const errorMessage = error.message || '连接失败，请稍后再试。'
+      setMessages((current) => [...current, { role: 'assistant', content: errorMessage }])
+      setAnswer(errorMessage)
+      setAnswerError(true)
     } finally {
       setLoading(false)
     }
@@ -411,19 +419,18 @@ function ResumeChat() {
 
   return (
     <div className={`resume-chat ${open ? 'is-open' : ''}`}>
-      {open && (
-        <section className="chat-panel" aria-label="与袁诚的 AI 分身对话">
-          <header><div><strong>和“袁诚”聊聊</strong><small>AI 简历助手</small></div><button type="button" onClick={() => setOpen(false)} aria-label="关闭对话"><X size={16} weight="bold" /></button></header>
-          <div className="chat-messages" aria-live="polite">
-            {messages.map((message, index) => <p className={`${message.role} ${message.error ? 'is-error' : ''}`} key={`${message.role}-${index}`}>{message.content}</p>)}
-            {loading && <p className="assistant is-typing">正在思考<span>···</span></p>}
-          </div>
-          <form onSubmit={sendMessage}>
-            <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" />
-            <button type="submit" disabled={!input.trim() || loading} aria-label="发送"><PaperPlaneTilt size={17} weight="fill" /></button>
-          </form>
-        </section>
+      {open && (loading || answer) && (
+        <aside className={`model-answer ${answerError ? 'is-error' : ''}`} aria-live="polite">
+          <small>袁诚的 AI 分身</small>
+          <p>{loading ? '我想一下…' : answer}</p>
+        </aside>
       )}
+      {open && <form className="chat-composer" onSubmit={sendMessage}>
+        <ChatCircleDots size={19} weight="fill" aria-hidden="true" />
+        <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" autoFocus />
+        <button className="chat-send" type="submit" disabled={!input.trim() || loading} aria-label="发送"><PaperPlaneTilt size={17} weight="fill" /></button>
+        <button className="chat-close" type="button" onClick={() => { setOpen(false); setAnswer('') }} aria-label="关闭对话"><X size={15} weight="bold" /></button>
+      </form>}
       {!open && <button className="chat-trigger" type="button" onClick={() => setOpen(true)}><ChatCircleDots size={20} weight="fill" /><span>和我聊聊</span></button>}
     </div>
   )
