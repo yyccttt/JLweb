@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense, useEffect, useState } from 'react'
+import React, { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import {
   ArrowUpRight,
   Briefcase,
@@ -377,7 +377,7 @@ function InfoPanel({ activeView, onClose }) {
   )
 }
 
-function ResumeChat() {
+function ResumeChat({ activeView }) {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([
     { role: 'assistant', content: '你好，我是袁诚的 AI 分身。你可以问我项目经历、技术能力或求职方向。' },
@@ -386,6 +386,17 @@ function ResumeChat() {
   const [loading, setLoading] = useState(false)
   const [answer, setAnswer] = useState('')
   const [answerError, setAnswerError] = useState(false)
+  const requestController = useRef(null)
+
+  useEffect(() => {
+    requestController.current?.abort()
+    requestController.current = null
+    setOpen(false)
+    setInput('')
+    setAnswer('')
+    setAnswerError(false)
+    setLoading(false)
+  }, [activeView])
 
   const sendMessage = async (event) => {
     event.preventDefault()
@@ -397,23 +408,31 @@ function ResumeChat() {
     setLoading(true)
     setAnswer('')
     setAnswerError(false)
+    const controller = new AbortController()
+    requestController.current?.abort()
+    requestController.current = controller
     try {
       const response = await fetch(CHAT_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: nextMessages.slice(-10) }),
+        signal: controller.signal,
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || '服务暂时不可用')
       setMessages((current) => [...current, { role: 'assistant', content: data.reply }])
       setAnswer(data.reply)
     } catch (error) {
+      if (error.name === 'AbortError') return
       const errorMessage = error.message || '连接失败，请稍后再试。'
       setMessages((current) => [...current, { role: 'assistant', content: errorMessage }])
       setAnswer(errorMessage)
       setAnswerError(true)
     } finally {
-      setLoading(false)
+      if (requestController.current === controller) {
+        requestController.current = null
+        setLoading(false)
+      }
     }
   }
 
@@ -475,7 +494,7 @@ export default function App() {
       </div>
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
       {panelOpen && <InfoPanel activeView={activeView} onClose={() => setPanelOpen(false)} />}
-      <ResumeChat />
+      <ResumeChat activeView={activeView} />
       <div className="model-caption" aria-hidden="true"><span>拖动模型查看视角</span></div>
       <div className="grain" aria-hidden="true" />
     </main>
