@@ -459,7 +459,7 @@ function ResumeChat({ activeView, panelOpen }) {
 
 export default function App() {
   const [activeView, setActiveView] = useState('profile')
-  const [panelOpen, setPanelOpen] = useState(true)
+  const [panelOpen, setPanelOpen] = useState(false)
   const [loadScene, setLoadScene] = useState(false)
   const [sceneReady, setSceneReady] = useState(false)
   const [sceneAttempt, setSceneAttempt] = useState(0)
