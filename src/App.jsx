@@ -238,7 +238,11 @@ function PanelContent({ activeView }) {
             <p>在 AI 时代持续做出有实际价值、能够被验证的成果。</p>
           </section>
         </div>
-        <div className="profile-focus"><span>理解能力强</span><span>动手能力强</span><span>善于解决实际问题</span></div>
+        <div className="profile-focus" aria-label="个人特质">
+          <span><strong>理解能力强</strong><small>快速抓住需求重点</small></span>
+          <span><strong>动手能力强</strong><small>用实践验证想法</small></span>
+          <span><strong>善于解决实际问题</strong><small>关注真正可落地的结果</small></span>
+        </div>
       </div>
     )
   }

@@ -156,9 +156,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .career-grid section { padding: .9rem; border-radius: var(--radius); background: rgba(255,255,255,.66); border: 1px solid var(--hairline); box-shadow: 0 8px 24px rgba(76,104,89,.06); }
 .career-grid h2 { margin: 0 0 .45rem; color: var(--accent); font-size: .68rem; font-weight: 850; }
 .career-grid p { margin: 0; color: #46524b; font-size: .72rem; line-height: 1.55; }
-.profile-focus { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; margin-top: .35rem; }
-.profile-focus span { padding: .8rem .65rem; border-radius: 999px; background: var(--accent-soft); color: #3b5146; text-align: center; font-size: .68rem; font-weight: 800; }
-.profile-focus span:nth-child(2) { background: var(--peach-soft); }
+.profile-focus { display: grid; grid-template-columns: .9fr .9fr 1.35fr; margin-top: .45rem; padding-top: 1rem; border-top: 1px solid var(--hairline); }
+.profile-focus span { min-width: 0; padding: 0 .8rem; color: #3b5146; }
+.profile-focus span:first-child { padding-left: 0; }
+.profile-focus span:last-child { padding-right: 0; }
+.profile-focus span + span { border-left: 1px solid var(--hairline); }
+.profile-focus strong { display: block; font-size: .7rem; font-weight: 850; line-height: 1.35; }
+.profile-focus small { display: block; margin-top: .3rem; color: #748078; font-size: .58rem; line-height: 1.45; }
 
 .skills-content > p { margin: 0 0 1.25rem; color: #46514b; font-size: .78rem; line-height: 1.7; }
 .skill-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 1.45rem 1.1rem; }
@@ -224,7 +228,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .info-panel { width: min(31rem, 48vw); }
   .floating-nav { left: 1.45rem; }
   .view-button { width: 8.6rem; }
-  .profile-focus { grid-template-columns: 1fr; }
+  .profile-focus { grid-template-columns: .9fr .9fr 1.35fr; }
 }
 
 @media (max-width: 767px) {
