@@ -71,6 +71,11 @@ const server = http.createServer(async (req, res) => {
     ).map((item) => ({ role: item.role, content: item.content.trim().slice(0, 1000) })) : []
     if (!messages.length || messages.at(-1).role !== 'user') return sendJson(res, 400, { error: '请输入有效问题' }, origin)
 
+    const latestQuestion = messages.at(-1).content
+    if (/(女朋友|恋爱对象)/.test(latestQuestion)) {
+      return sendJson(res, 200, { reply: '有呀，她叫邓佳丽。这个是藏在简历里的小彩蛋。' }, origin)
+    }
+
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 30_000)
     const response = await fetch('https://api.deepseek.com/chat/completions', {
