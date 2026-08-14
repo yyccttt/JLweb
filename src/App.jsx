@@ -418,21 +418,23 @@ function ResumeChat() {
   }
 
   return (
-    <div className={`resume-chat ${open ? 'is-open' : ''}`}>
+    <>
       {open && (loading || answer) && (
         <aside className={`model-answer ${answerError ? 'is-error' : ''}`} aria-live="polite">
           <small>袁诚的 AI 分身</small>
           <p>{loading ? '我想一下…' : answer}</p>
         </aside>
       )}
-      {open && <form className="chat-composer" onSubmit={sendMessage}>
-        <ChatCircleDots size={19} weight="fill" aria-hidden="true" />
-        <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" autoFocus />
-        <button className="chat-send" type="submit" disabled={!input.trim() || loading} aria-label="发送"><PaperPlaneTilt size={17} weight="fill" /></button>
-        <button className="chat-close" type="button" onClick={() => { setOpen(false); setAnswer('') }} aria-label="关闭对话"><X size={15} weight="bold" /></button>
-      </form>}
-      {!open && <button className="chat-trigger" type="button" onClick={() => setOpen(true)}><ChatCircleDots size={20} weight="fill" /><span>和我聊聊</span></button>}
-    </div>
+      <div className={`resume-chat ${open ? 'is-open' : ''}`}>
+        {open && <form className="chat-composer" onSubmit={sendMessage}>
+          <ChatCircleDots size={19} weight="fill" aria-hidden="true" />
+          <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" autoFocus />
+          <button className="chat-send" type="submit" disabled={!input.trim() || loading} aria-label="发送"><PaperPlaneTilt size={17} weight="fill" /></button>
+          <button className="chat-close" type="button" onClick={() => { setOpen(false); setAnswer('') }} aria-label="关闭对话"><X size={15} weight="bold" /></button>
+        </form>}
+        {!open && <button className="chat-trigger" type="button" onClick={() => setOpen(true)}><ChatCircleDots size={20} weight="fill" /><span>和我聊聊</span></button>}
+      </div>
+    </>
   )
 }
 
