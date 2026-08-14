@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: jlweb-ai-chat
+    name: jlweb-resume-ai
     runtime: node
     plan: free
     buildCommand: npm install

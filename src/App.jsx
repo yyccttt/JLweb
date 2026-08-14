@@ -14,7 +14,7 @@ import {
   X,
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
-const CHAT_API_URL = import.meta.env.VITE_CHAT_API_URL || 'https://jlweb-ai-chat.onrender.com/api/chat'
+const CHAT_API_URL = import.meta.env.VITE_CHAT_API_URL || 'https://jlweb-resume-ai.onrender.com/api/chat'
 
 class SceneErrorBoundary extends Component {
   constructor(props) {
