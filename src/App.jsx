@@ -78,7 +78,7 @@ const views = {
     target: [0, 0.3, 0],
     kicker: 'WORK EXPERIENCE',
     title: '走进生产现场，\n再把需求做成产品。',
-    intro: '在同一企业体系内完成生产学习、业务系统开发、客户项目交付与 AI 内容制作，实习周期共 5 个月。',
+    intro: '在同一企业体系内完成生产学习、业务系统开发、客户项目交付与 AI 内容制作。',
   },
   education: {
     label: '教育背景',
@@ -282,16 +282,15 @@ function PanelContent({ activeView }) {
   if (activeView === 'experience') {
     return (
       <div className="work-experience">
-        <div className="experience-meta"><span>实习经历</span><strong>5 个月</strong></div>
         <section className="work-entry">
-          <header><span>生产一线学习</span><h2>遵义中立精工制造有限公司</h2></header>
+          <header><div><span>生产一线学习</span><strong>15 天</strong></div><h2>遵义中立精工制造有限公司</h2></header>
           <ul>
             <li>深入第一生产线学习制造流程，为后续软件开发和企业需求对接建立业务基础。</li>
             <li>通过现场观察及与一线人员沟通，理解实际生产环节中的问题与真实需求，提升业务分析和跨岗位沟通能力。</li>
           </ul>
         </section>
         <section className="work-entry">
-          <header><span>软件开发与 AI 内容制作</span><h2>贵州艾立科技有限公司</h2></header>
+          <header><div><span>软件开发与 AI 内容制作</span><strong>5 个月</strong></div><h2>贵州艾立科技有限公司</h2></header>
           <ul>
             <li>面向兄弟公司开展业务系统开发与维护，主要参与企业内部管理平台 ZLWEBAPP，具体成果见项目经历。</li>
             <li>独立负责外部客户项目 LifeNuva 会员官网，从客户沟通、需求梳理到完整开发交付全程推进。</li>
