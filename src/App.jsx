@@ -3,15 +3,18 @@ import {
   ArrowUpRight,
   Briefcase,
   Buildings,
+  ChatCircleDots,
   Code,
   EnvelopeSimple,
   GithubLogo,
   GraduationCap,
   IdentificationCard,
   Phone,
+  PaperPlaneTilt,
   X,
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
+const CHAT_API_URL = import.meta.env.VITE_CHAT_API_URL || 'https://jlweb-ai-assistant.onrender.com/api/chat'
 
 class SceneErrorBoundary extends Component {
   constructor(props) {
@@ -374,6 +377,58 @@ function InfoPanel({ activeView, onClose }) {
   )
 }
 
+function ResumeChat() {
+  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: '你好，我是袁诚的 AI 分身。你可以问我项目经历、技术能力或求职方向。' },
+  ])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const sendMessage = async (event) => {
+    event.preventDefault()
+    const content = input.trim()
+    if (!content || loading) return
+    const nextMessages = [...messages, { role: 'user', content }]
+    setMessages(nextMessages)
+    setInput('')
+    setLoading(true)
+    try {
+      const response = await fetch(CHAT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: nextMessages.slice(-10) }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || '服务暂时不可用')
+      setMessages((current) => [...current, { role: 'assistant', content: data.reply }])
+    } catch (error) {
+      setMessages((current) => [...current, { role: 'assistant', content: error.message || '连接失败，请稍后再试。', error: true }])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className={`resume-chat ${open ? 'is-open' : ''}`}>
+      {open && (
+        <section className="chat-panel" aria-label="与袁诚的 AI 分身对话">
+          <header><div><strong>和“袁诚”聊聊</strong><small>AI 简历助手</small></div><button type="button" onClick={() => setOpen(false)} aria-label="关闭对话"><X size={16} weight="bold" /></button></header>
+          <div className="chat-messages" aria-live="polite">
+            {messages.map((message, index) => <p className={`${message.role} ${message.error ? 'is-error' : ''}`} key={`${message.role}-${index}`}>{message.content}</p>)}
+            {loading && <p className="assistant is-typing">正在思考<span>···</span></p>}
+          </div>
+          <form onSubmit={sendMessage}>
+            <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" />
+            <button type="submit" disabled={!input.trim() || loading} aria-label="发送"><PaperPlaneTilt size={17} weight="fill" /></button>
+          </form>
+        </section>
+      )}
+      {!open && <button className="chat-trigger" type="button" onClick={() => setOpen(true)}><ChatCircleDots size={20} weight="fill" /><span>和我聊聊</span></button>}
+    </div>
+  )
+}
+
 export default function App() {
   const [activeView, setActiveView] = useState('profile')
   const [panelOpen, setPanelOpen] = useState(true)
@@ -411,6 +466,7 @@ export default function App() {
       </div>
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
       {panelOpen && <InfoPanel activeView={activeView} onClose={() => setPanelOpen(false)} />}
+      <ResumeChat />
       <div className="model-caption" aria-hidden="true"><span>拖动模型查看视角</span></div>
       <div className="grain" aria-hidden="true" />
     </main>
