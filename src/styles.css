@@ -284,6 +284,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .certificate-card img { width: 4.4rem; }
   .model-caption { display: none; }
   .resume-chat { bottom: 5.45rem; }
+  .resume-chat.is-panel-open { display: none; }
+  .model-answer.is-panel-open { display: none; }
   .model-answer { top: 4.75rem; right: .85rem; left: .85rem; width: auto; max-height: 9.5rem; }
   .model-answer::after { left: 50%; bottom: -.42rem; border: 0; border-right: 1px solid rgba(255,255,255,.86); border-bottom: 1px solid rgba(255,255,255,.86); transform: translateX(-50%) rotate(45deg); }
 }

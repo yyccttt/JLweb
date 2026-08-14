@@ -377,7 +377,7 @@ function InfoPanel({ activeView, onClose }) {
   )
 }
 
-function ResumeChat({ activeView }) {
+function ResumeChat({ activeView, panelOpen }) {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([
     { role: 'assistant', content: '你好，我是袁诚的 AI 分身。你可以问我项目经历、技术能力或求职方向。' },
@@ -396,7 +396,7 @@ function ResumeChat({ activeView }) {
     setAnswer('')
     setAnswerError(false)
     setLoading(false)
-  }, [activeView])
+  }, [activeView, panelOpen])
 
   const sendMessage = async (event) => {
     event.preventDefault()
@@ -439,12 +439,12 @@ function ResumeChat({ activeView }) {
   return (
     <>
       {open && (loading || answer) && (
-        <aside className={`model-answer ${answerError ? 'is-error' : ''}`} aria-live="polite">
+        <aside className={`model-answer ${answerError ? 'is-error' : ''} ${panelOpen ? 'is-panel-open' : ''}`} aria-live="polite">
           <small>袁诚的 AI 分身</small>
           <p>{loading ? '我想一下…' : answer}</p>
         </aside>
       )}
-      <div className={`resume-chat ${open ? 'is-open' : ''}`}>
+      <div className={`resume-chat ${open ? 'is-open' : ''} ${panelOpen ? 'is-panel-open' : ''}`}>
         {open && <form className="chat-composer" onSubmit={sendMessage}>
           <ChatCircleDots size={19} weight="fill" aria-hidden="true" />
           <input value={input} onChange={(event) => setInput(event.target.value)} maxLength={500} placeholder="问问我的项目或能力…" aria-label="输入问题" autoFocus />
@@ -494,7 +494,7 @@ export default function App() {
       </div>
       <FloatingNav activeView={activeView} onChange={handleViewChange} />
       {panelOpen && <InfoPanel activeView={activeView} onClose={() => setPanelOpen(false)} />}
-      <ResumeChat activeView={activeView} />
+      <ResumeChat activeView={activeView} panelOpen={panelOpen} />
       <div className="model-caption" aria-hidden="true"><span>拖动模型查看视角</span></div>
       <div className="grain" aria-hidden="true" />
     </main>
