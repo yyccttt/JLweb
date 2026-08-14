@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: jlweb-ai-assistant
+    name: jlweb-ai-chat
     runtime: node
     plan: free
     buildCommand: npm install
