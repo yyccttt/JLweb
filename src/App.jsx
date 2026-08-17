@@ -116,6 +116,12 @@ const projects = [
     type: '制造企业一体化业务管理平台',
     summary: '参与制造企业内部管理平台的需求分析、功能开发与持续维护，围绕生产、采购、销售、财务、质量、仓储、安全及绩效等业务场景，推进原有 Excel 与人工协作流程的数字化改造。',
     role: '全栈开发 · 需求对接 · 系统维护',
+    showcase: {
+      src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.png`,
+      alt: 'ZLWEBAPP 应收账款管理页面脱敏截图',
+      title: '财务应收与催款工作台',
+      caption: '面向财务人员的日常业务场景，将记账、收支登记、应收核对、客户账期维护、催款跟进与出纳操作集中到统一工作台，减少多份 Excel 往返核对，让财务数据更清晰、催款进度更容易追踪。截图中的企业与金额信息已脱敏。',
+    },
     work: [
       '重点参与出纳与应收管理，完成收支明细、客户账期、应收余额、业务应催款、订单收款及 Excel 导入导出等功能。',
       '对接用友 U8 ERP 与钉钉开放平台，实现发货、总账、组织、审批及考勤等业务数据的自动汇总与协同。',
@@ -315,6 +321,15 @@ function ProjectList() {
                     <h4>项目成果</h4>
                     <ul className="project-outcomes">{project.outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
                   </>
+                )}
+                {project.showcase && (
+                  <figure className="project-showcase">
+                    <img src={project.showcase.src} alt={project.showcase.alt} loading="lazy" decoding="async" />
+                    <figcaption>
+                      <strong>{project.showcase.title}</strong>
+                      <span>{project.showcase.caption}</span>
+                    </figcaption>
+                  </figure>
                 )}
                 <h4>技术栈</h4>
                 <div className="tech-row" aria-label="项目技术栈">
