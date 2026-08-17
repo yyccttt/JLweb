@@ -9,6 +9,7 @@ import {
   GithubLogo,
   GraduationCap,
   IdentificationCard,
+  LockKey,
   Phone,
   PaperPlaneTilt,
   Play,
@@ -16,6 +17,7 @@ import {
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
 const CHAT_API_URL = import.meta.env.VITE_CHAT_API_URL || 'https://jlweb-resume-ai.onrender.com/api/chat'
+const GITHUB_ACCESS_API_URL = import.meta.env.VITE_GITHUB_ACCESS_API_URL || 'https://jlweb-resume-ai.onrender.com/api/github-access'
 
 class SceneErrorBoundary extends Component {
   constructor(props) {
@@ -313,6 +315,28 @@ function ProjectList() {
 }
 
 function PanelContent({ activeView }) {
+  const [githubGateOpen, setGithubGateOpen] = useState(false)
+  const [githubPassword, setGithubPassword] = useState('')
+  const [githubGateStatus, setGithubGateStatus] = useState({ loading: false, error: '' })
+
+  const unlockGithub = async (event) => {
+    event.preventDefault()
+    if (!githubPassword || githubGateStatus.loading) return
+    setGithubGateStatus({ loading: true, error: '' })
+    try {
+      const response = await fetch(GITHUB_ACCESS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: githubPassword }),
+      })
+      const data = await response.json().catch(() => ({}))
+      if (!response.ok || !data.url) throw new Error(data.error || '验证服务暂时不可用')
+      window.location.assign(data.url)
+    } catch (error) {
+      setGithubGateStatus({ loading: false, error: error.message || '验证服务暂时不可用' })
+    }
+  }
+
   if (activeView === 'profile') {
     return (
       <div className="profile-copy">
@@ -418,9 +442,31 @@ function PanelContent({ activeView }) {
           <span><small>邮箱</small><strong>yc2164241187@qq.com</strong></span>
         </a>
       </div>
-      <a className="contact-link" href="https://github.com/yyccttt" target="_blank" rel="noreferrer">
-        <GithubLogo size={20} weight="bold" />查看公开项目<ArrowUpRight size={17} weight="bold" />
-      </a>
+      {!githubGateOpen ? (
+        <button className="contact-link" type="button" onClick={() => setGithubGateOpen(true)}>
+          <GithubLogo size={20} weight="bold" />查看公开项目<LockKey size={17} weight="bold" />
+        </button>
+      ) : (
+        <form className="github-gate" onSubmit={unlockGithub}>
+          <label htmlFor="github-access-password"><LockKey size={16} weight="bold" />访问密码</label>
+          <div>
+            <input
+              id="github-access-password"
+              type="password"
+              value={githubPassword}
+              onChange={(event) => setGithubPassword(event.target.value)}
+              placeholder="请输入密码"
+              autoComplete="current-password"
+              maxLength={128}
+              autoFocus
+            />
+            <button type="submit" disabled={!githubPassword || githubGateStatus.loading}>
+              {githubGateStatus.loading ? '验证中' : '解锁'}
+            </button>
+          </div>
+          {githubGateStatus.error && <p role="alert">{githubGateStatus.error}</p>}
+        </form>
+      )}
     </div>
   )
 }

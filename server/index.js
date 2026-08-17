@@ -1,7 +1,9 @@
 import http from 'node:http'
+import { createHash, timingSafeEqual } from 'node:crypto'
 
 const PORT = Number(process.env.PORT || 3000)
 const API_KEY = process.env.DEEPSEEK_API_KEY
+const GITHUB_ACCESS_PASSWORD = process.env.GITHUB_ACCESS_PASSWORD
 const allowedOrigins = new Set([
   'https://yyccttt.github.io',
   'http://localhost:4173',
@@ -42,6 +44,13 @@ function isRateLimited(ip) {
   return recent.length > 12
 }
 
+function passwordMatches(value) {
+  if (!GITHUB_ACCESS_PASSWORD || typeof value !== 'string') return false
+  const received = createHash('sha256').update(value).digest()
+  const expected = createHash('sha256').update(GITHUB_ACCESS_PASSWORD).digest()
+  return timingSafeEqual(received, expected)
+}
+
 const server = http.createServer(async (req, res) => {
   const origin = req.headers.origin || ''
   if (req.method === 'OPTIONS') {
@@ -54,10 +63,11 @@ const server = http.createServer(async (req, res) => {
     })
     return res.end()
   }
-  if (req.method === 'GET' && req.url === '/health') return sendJson(res, 200, { status: 'ok', configured: Boolean(API_KEY) }, origin)
-  if (req.method !== 'POST' || req.url !== '/api/chat') return sendJson(res, 404, { error: '接口不存在' }, origin)
+  if (req.method === 'GET' && req.url === '/health') return sendJson(res, 200, { status: 'ok', configured: Boolean(API_KEY), githubAccessConfigured: Boolean(GITHUB_ACCESS_PASSWORD) }, origin)
+  const isChatRequest = req.method === 'POST' && req.url === '/api/chat'
+  const isGithubAccessRequest = req.method === 'POST' && req.url === '/api/github-access'
+  if (!isChatRequest && !isGithubAccessRequest) return sendJson(res, 404, { error: '接口不存在' }, origin)
   if (!allowedOrigins.has(origin)) return sendJson(res, 403, { error: '来源不受信任' })
-  if (!API_KEY) return sendJson(res, 503, { error: 'AI 服务尚未配置' }, origin)
   if (isRateLimited(req.socket.remoteAddress || 'unknown')) return sendJson(res, 429, { error: '提问太频繁，请稍后再试' }, origin)
 
   let raw = ''
@@ -68,6 +78,13 @@ const server = http.createServer(async (req, res) => {
 
   try {
     const parsed = JSON.parse(raw)
+    if (isGithubAccessRequest) {
+      if (!GITHUB_ACCESS_PASSWORD) return sendJson(res, 503, { error: '访问密码尚未配置' }, origin)
+      if (!passwordMatches(parsed.password)) return sendJson(res, 401, { error: '密码不正确，请重新输入' }, origin)
+      return sendJson(res, 200, { url: 'https://github.com/yyccttt' }, origin)
+    }
+
+    if (!API_KEY) return sendJson(res, 503, { error: 'AI 服务尚未配置' }, origin)
     const messages = Array.isArray(parsed.messages) ? parsed.messages.slice(-10).filter((item) =>
       ['user', 'assistant'].includes(item?.role) && typeof item.content === 'string' && item.content.trim()
     ).map((item) => ({ role: item.role, content: item.content.trim().slice(0, 1000) })) : []

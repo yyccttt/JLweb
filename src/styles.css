@@ -245,9 +245,17 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .contact-list span, .contact-list small, .contact-list strong { display: block; min-width: 0; }
 .contact-list small { margin-bottom: .18rem; color: var(--muted); font-size: .61rem; font-weight: 700; }
 .contact-list strong { overflow-wrap: anywhere; font-size: .76rem; font-weight: 850; }
-.contact-link { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.2rem; padding: .8rem 1.08rem; border-radius: 999px; color: #f7faf8; background: var(--accent); text-decoration: none; font-size: .76rem; font-weight: 850; transition: transform 180ms ease, background 180ms ease; }
+.contact-link { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.2rem; padding: .8rem 1.08rem; border: 0; border-radius: 999px; color: #f7faf8; background: var(--accent); text-decoration: none; cursor: pointer; font-size: .76rem; font-weight: 850; transition: transform 180ms ease, background 180ms ease; }
 .contact-link:hover { transform: translateY(-3px) rotate(-1deg); background: var(--accent-deep); }
 .contact-link:active { transform: translateY(-1px) scale(.98); }
+.github-gate { display: grid; gap: .55rem; margin-top: 1.2rem; padding: .9rem; border: 1px solid var(--hairline); border-radius: var(--radius); background: rgba(255,255,255,.66); }
+.github-gate label { display: flex; align-items: center; gap: .4rem; color: var(--accent-deep); font-size: .66rem; font-weight: 850; }
+.github-gate > div { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .45rem; }
+.github-gate input { min-width: 0; height: 2.45rem; padding: 0 .75rem; border: 1px solid var(--hairline); border-radius: 14px; color: var(--ink); background: rgba(249,251,250,.94); outline: 0; font-size: .7rem; }
+.github-gate input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(95,128,111,.12); }
+.github-gate button { min-width: 4.4rem; padding: 0 .8rem; border: 0; border-radius: 14px; color: #f7faf8; background: var(--accent); cursor: pointer; font-size: .67rem; font-weight: 850; }
+.github-gate button:disabled { cursor: not-allowed; opacity: .45; }
+.github-gate p { margin: 0; color: #8a514c; font-size: .61rem; line-height: 1.45; }
 
 .resume-chat { position: fixed; z-index: 12; left: 50%; bottom: 1.45rem; transform: translateX(-50%); }
 .chat-trigger { display: inline-flex; align-items: center; gap: .55rem; padding: .72rem 1rem; border: 1px solid rgba(255,255,255,.72); border-radius: 999px; color: #f7faf8; background: var(--accent); box-shadow: 0 12px 32px rgba(73,104,88,.24); cursor: pointer; font-size: .72rem; font-weight: 850; transition: transform 180ms ease, background 180ms ease; }
