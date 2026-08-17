@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">JLwebYC 网站图标</title>
+  <rect width="64" height="64" rx="17" fill="#5f806f"/>
+  <path d="M9 39c8 13 27 18 43 8" fill="none" stroke="#91ad9e" stroke-width="3" stroke-linecap="round"/>
+  <path d="M36 18c-11-5-22 2-22 14s11 20 22 14" fill="none" stroke="#f7faf8" stroke-width="5" stroke-linecap="round"/>
+  <path d="m32 20 10 12 10-12M42 32v15" fill="none" stroke="#f7faf8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="53" cy="15" r="3" fill="#f4e5dc"/>
+</svg>
