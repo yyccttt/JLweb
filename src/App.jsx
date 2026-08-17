@@ -354,7 +354,7 @@ function ProjectList() {
                     {project.showcases.map((showcase) => (
                       <figure className="project-showcase" key={showcase.title}>
                         <a className="project-showcase-image" href={showcase.src} target="_blank" rel="noreferrer" aria-label={`查看${showcase.title}完整大图`}>
-                          <img src={showcase.src} alt={showcase.alt} loading="lazy" decoding="async" />
+                          <img src={showcase.src} alt={showcase.alt} width="1280" height="611" loading="lazy" decoding="async" fetchPriority="low" />
                           <span>点击查看完整大图</span>
                         </a>
                         <figcaption>
