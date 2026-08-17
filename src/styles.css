@@ -259,8 +259,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .chat-send { width: 2.3rem; height: 2.3rem; border-radius: 50%; color: #fff; background: var(--accent); }
 .chat-send:disabled { cursor: not-allowed; opacity: .38; }
 .chat-close { width: 2rem; height: 2rem; border-radius: 50%; color: var(--muted); background: transparent; }
-.model-answer { position: fixed; z-index: 11; top: 5.75rem; left: 1.5rem; width: min(19rem, calc(100vw - 3rem)); max-height: 6rem; overflow-y: auto; padding: .9rem 1rem 1rem; border: 1px solid rgba(255,255,255,.86); border-radius: var(--radius); color: #3f4c45; background: rgba(249,251,250,.95); backdrop-filter: blur(22px); box-shadow: 0 18px 48px rgba(67,92,79,.18); animation: answer-in 360ms cubic-bezier(.16,1,.3,1) both; }
-.model-answer::after { content: ""; position: absolute; right: 1.5rem; bottom: -.42rem; width: .8rem; height: .8rem; border-right: 1px solid rgba(255,255,255,.86); border-bottom: 1px solid rgba(255,255,255,.86); background: rgba(249,251,250,.95); transform: rotate(45deg); }
+.model-answer { position: fixed; z-index: 11; top: clamp(9.8rem, 23vh, 12.5rem); left: calc(50% + 5.5rem); width: min(21rem, calc(50vw - 7rem)); max-height: 12rem; overflow-y: auto; padding: .9rem 1rem 1rem; border: 1px solid rgba(255,255,255,.86); border-radius: var(--radius); color: #3f4c45; background: rgba(249,251,250,.95); backdrop-filter: blur(22px); box-shadow: 0 18px 48px rgba(67,92,79,.18); animation: answer-in 360ms cubic-bezier(.16,1,.3,1) both; }
+.model-answer::after { content: ""; position: absolute; left: -.42rem; bottom: 1.2rem; width: .8rem; height: .8rem; border-left: 1px solid rgba(255,255,255,.86); border-bottom: 1px solid rgba(255,255,255,.86); background: rgba(249,251,250,.95); transform: rotate(45deg); }
 .model-answer small { display: block; margin-bottom: .35rem; color: var(--accent); font-size: .58rem; font-weight: 850; letter-spacing: .08em; }
 .model-answer p { margin: 0; font-size: .73rem; line-height: 1.65; white-space: pre-wrap; }
 .model-answer.is-error { color: #8a514c; background: rgba(255,244,242,.96); }
@@ -306,7 +306,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .resume-chat.is-panel-open { display: none; }
   .model-answer.is-panel-open { display: none; }
   .model-answer { top: 4.75rem; right: .85rem; left: .85rem; width: auto; max-height: 9.5rem; }
-  .model-answer::after { right: auto; left: 50%; bottom: -.42rem; border: 0; border-right: 1px solid rgba(255,255,255,.86); border-bottom: 1px solid rgba(255,255,255,.86); transform: translateX(-50%) rotate(45deg); }
+  .model-answer::after { left: 50%; bottom: -.42rem; border: 0; border-right: 1px solid rgba(255,255,255,.86); border-bottom: 1px solid rgba(255,255,255,.86); transform: translateX(-50%) rotate(45deg); }
 }
 
 @media (max-width: 420px) {
