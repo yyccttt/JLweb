@@ -11,6 +11,7 @@ import {
   IdentificationCard,
   Phone,
   PaperPlaneTilt,
+  Play,
   X,
 } from '@phosphor-icons/react'
 const Scene3D = lazy(() => import('./Scene3D.jsx'))
@@ -163,6 +164,22 @@ const projects = [
       '研究 HTML 视频框架及可复用的动画内容生产方式。',
     ],
     stack: ['HyperFrames', 'HTML / CSS', 'JavaScript', 'AI 视频', '提示词设计'],
+    videos: [
+      {
+        title: '末日补给',
+        description: 'AI 短视频成片',
+        duration: '00:42',
+        poster: 'videos/apocalypse-supply.webp',
+        src: 'videos/apocalypse-supply.mp4',
+      },
+      {
+        title: '吃多了',
+        description: 'AI 短视频成片',
+        duration: '00:36',
+        poster: 'videos/ate-too-much.webp',
+        src: 'videos/ate-too-much.mp4',
+      },
+    ],
   },
 ]
 
@@ -221,6 +238,51 @@ function FloatingNav({ activeView, onChange }) {
   )
 }
 
+function VideoShowcase({ videos }) {
+  const [activeVideo, setActiveVideo] = useState('')
+
+  return (
+    <section className="video-showcase" aria-labelledby="video-showcase-title">
+      <div className="video-showcase-heading">
+        <h2 id="video-showcase-title">AI 短视频作品</h2>
+        <p>点击作品后才加载视频</p>
+      </div>
+      <div className="video-grid">
+        {videos.map((video) => {
+          const isActive = activeVideo === video.src
+          const posterUrl = `${import.meta.env.BASE_URL}${video.poster}`
+          return (
+            <figure className="video-card" key={video.src}>
+              <div className="video-frame">
+                {isActive ? (
+                  <video
+                    src={`${import.meta.env.BASE_URL}${video.src}`}
+                    poster={posterUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    aria-label={`播放${video.title}`}
+                  />
+                ) : (
+                  <button type="button" onClick={() => setActiveVideo(video.src)} aria-label={`播放${video.title}`}>
+                    <img src={posterUrl} alt={`${video.title}视频封面`} loading="lazy" decoding="async" />
+                    <span className="video-play"><Play size={18} weight="fill" aria-hidden="true" /></span>
+                  </button>
+                )}
+              </div>
+              <figcaption>
+                <span><strong>{video.title}</strong><small>{video.description}</small></span>
+                <time>{video.duration}</time>
+              </figcaption>
+            </figure>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 function ProjectList() {
   const [expanded, setExpanded] = useState(-1)
   return (
@@ -240,6 +302,7 @@ function ProjectList() {
                 <div className="tech-row" aria-label="项目技术栈">
                   {project.stack.map((item) => <span key={item}>{item}</span>)}
                 </div>
+                {project.videos && <VideoShowcase videos={project.videos} />}
               </div>
             )}
           </article>

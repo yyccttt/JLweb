@@ -185,6 +185,25 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .project-detail li { padding-left: .2rem; font-size: .7rem; line-height: 1.55; }
 .project-detail li::marker { color: var(--accent); }
 .tech-row { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+.video-showcase { margin-top: 1.15rem; padding-top: 1rem; border-top: 1px solid var(--hairline); }
+.video-showcase-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .65rem; }
+.video-showcase-heading h2 { margin: 0; color: var(--ink); font-size: .72rem; font-weight: 850; }
+.video-showcase-heading p { margin: 0; color: var(--muted); font-size: .56rem; }
+.video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+.video-card { min-width: 0; margin: 0; }
+.video-frame { position: relative; overflow: hidden; aspect-ratio: 9 / 16; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--accent-soft); }
+.video-frame button, .video-frame img, .video-frame video { width: 100%; height: 100%; display: block; }
+.video-frame button { position: relative; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.video-frame img, .video-frame video { object-fit: cover; }
+.video-frame button::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 58%, rgba(25, 37, 31, .32)); transition: opacity 180ms ease; }
+.video-frame button:hover::after { opacity: .72; }
+.video-frame button:active { transform: scale(.99); }
+.video-play { position: absolute; z-index: 1; right: .65rem; bottom: .65rem; display: grid; place-items: center; width: 2.35rem; height: 2.35rem; border: 1px solid rgba(255,255,255,.72); border-radius: 50%; color: #f7faf8; background: var(--accent); box-shadow: 0 8px 20px rgba(48,72,59,.2); }
+.video-card figcaption { display: flex; align-items: flex-start; justify-content: space-between; gap: .7rem; padding: .55rem .15rem 0; }
+.video-card figcaption span, .video-card figcaption strong, .video-card figcaption small { display: block; min-width: 0; }
+.video-card figcaption strong { color: var(--ink); font-size: .67rem; font-weight: 850; }
+.video-card figcaption small { margin-top: .12rem; color: var(--muted); font-size: .56rem; }
+.video-card figcaption time { flex: none; color: var(--accent); font-size: .56rem; font-weight: 800; }
 
 .work-experience { position: relative; display: grid; gap: 0; padding-left: 1.1rem; border-left: 1px solid rgba(95,128,111,.32); }
 .work-entry { position: relative; padding: 0 0 1.25rem .45rem; }
