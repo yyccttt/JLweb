@@ -12,16 +12,30 @@ function Model({ url, useMeshOpt, onReady }) {
   return <primitive object={scene} position={[0.03, -1.09, 0]} rotation={[0, -0.03, 0]} scale={1.95} />
 }
 
-function CameraRig({ activeView, views }) {
+const MAX_CAMERA_DISTANCE = 4.5
+
+function cameraAtDistance(view, distance) {
+  const offset = view.camera.map((value, index) => value - view.target[index])
+  const currentDistance = Math.hypot(...offset)
+  const ratio = distance / currentDistance
+  return offset.map((value, index) => view.target[index] + value * ratio)
+}
+
+function CameraRig({ activeView, views, isMobile }) {
   const controls = useRef(null)
+  const isInitialView = useRef(true)
   const view = views[activeView]
 
   useEffect(() => {
     if (!controls.current) return
-    controls.current.setLookAt(...view.camera, ...view.target, true)
-  }, [view])
+    const camera = isMobile && isInitialView.current
+      ? cameraAtDistance(view, MAX_CAMERA_DISTANCE)
+      : view.camera
+    controls.current.setLookAt(...camera, ...view.target, !isInitialView.current)
+    isInitialView.current = false
+  }, [isMobile, view])
 
-  return <CameraControls ref={controls} makeDefault minDistance={1.45} maxDistance={4.5} />
+  return <CameraControls ref={controls} makeDefault minDistance={1.45} maxDistance={MAX_CAMERA_DISTANCE} />
 }
 
 function ModelProgress() {
@@ -32,10 +46,13 @@ function ModelProgress() {
 export default function Scene3D({ activeView, views, onReady }) {
   const isMobile = useMemo(() => window.matchMedia('(max-width: 767px)').matches, [])
   const modelUrl = `${import.meta.env.BASE_URL}models/${isMobile ? 'yuan-cheng-mobile-safe.glb' : 'yuan-cheng-optimized.glb'}`
+  const initialCamera = isMobile
+    ? cameraAtDistance(views.profile, MAX_CAMERA_DISTANCE)
+    : views.profile.camera
 
   return (
     <Canvas
-      camera={{ position: views.profile.camera, fov: 34, near: 0.1, far: 100 }}
+      camera={{ position: initialCamera, fov: 34, near: 0.1, far: 100 }}
       dpr={isMobile ? [1, 1.15] : [1, 1.5]}
       gl={{ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => { gl.toneMappingExposure = 0.78 }}
@@ -48,7 +65,7 @@ export default function Scene3D({ activeView, views, onReady }) {
       <Suspense fallback={<ModelProgress />}>
         <Model url={modelUrl} useMeshOpt={!isMobile} onReady={onReady} />
       </Suspense>
-      <CameraRig activeView={activeView} views={views} />
+      <CameraRig activeView={activeView} views={views} isMobile={isMobile} />
     </Canvas>
   )
 }
