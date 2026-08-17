@@ -118,25 +118,25 @@ const projects = [
     role: '全栈开发 · 需求对接 · 系统维护',
     showcases: [
       {
-        src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.png`,
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.webp`,
         alt: 'ZLWEBAPP 应收账款管理页面脱敏截图',
         title: '财务应收与催款工作台',
         caption: '面向财务人员的日常业务场景，将记账、收支登记、应收核对、客户账期维护、催款跟进与出纳操作集中到统一工作台，减少多份 Excel 往返核对，让财务数据更清晰、催款进度更容易追踪。截图中的企业与金额信息已脱敏。',
       },
       {
-        src: `${import.meta.env.BASE_URL}images/zlwebapp-assembly-cost-anonymized.png`,
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-assembly-cost-anonymized.webp`,
         alt: 'ZLWEBAPP 装配入库标准成本估值页面脱敏截图',
         title: '装配入库标准成本估值与异常核对',
         caption: '基于用友 U8 的装配入库数量与企业当前制造标准成本，按日期和装配小组自动估算入库价值并生成趋势图；同时展示正式成本覆盖率，识别缺少标准成本的物料，并提供明细追溯与异常核对入口，辅助生产和财务快速发现成本数据问题。截图中的日期、批次与金额均已脱敏。',
       },
       {
-        src: `${import.meta.env.BASE_URL}images/zlwebapp-plating-quality-anonymized.png`,
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-plating-quality-anonymized.webp`,
         alt: 'ZLWEBAPP 电镀返工与工废异常治理页面脱敏截图',
         title: '电镀返工与工废异常治理',
         caption: '从用友 U8 电镀收料数据中自动筛选返工率或工废率达到异常阈值的产品，支持按周期查看、字段筛选和收料明细追溯；同时记录异常原因、责任方与供应商，并提供异常转正常及恢复异常的治理流程，帮助质量与生产人员持续跟踪高损耗产品。截图中的产品、数量、比例、批次和日期均已脱敏。',
       },
       {
-        src: `${import.meta.env.BASE_URL}images/zlwebapp-sample-workflow-anonymized.png`,
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-sample-workflow-anonymized.webp`,
         alt: 'ZLWEBAPP 样品制作申请看板脱敏截图',
         title: '样品制作审批与任务协同看板',
         caption: '对接钉钉样品制作审批流程，自动同步申请记录并按审批中、已完成和已撤销分类展示；将审批数据与 BOM 物料清单、U8 现存量查询和内部任务进度结合，支持预计完成时间维护及已利用归档，让样品从申请、备料到制作跟进形成统一工作入口。截图中的人员、部门、时间、数量和审批记录均已脱敏。',
