@@ -116,16 +116,25 @@ const projects = [
     type: '制造企业一体化业务管理平台',
     summary: '参与制造企业内部管理平台的需求分析、功能开发与持续维护，围绕生产、采购、销售、财务、质量、仓储、安全及绩效等业务场景，推进原有 Excel 与人工协作流程的数字化改造。',
     role: '全栈开发 · 需求对接 · 系统维护',
-    showcase: {
-      src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.png`,
-      alt: 'ZLWEBAPP 应收账款管理页面脱敏截图',
-      title: '财务应收与催款工作台',
-      caption: '面向财务人员的日常业务场景，将记账、收支登记、应收核对、客户账期维护、催款跟进与出纳操作集中到统一工作台，减少多份 Excel 往返核对，让财务数据更清晰、催款进度更容易追踪。截图中的企业与金额信息已脱敏。',
-    },
+    showcases: [
+      {
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.png`,
+        alt: 'ZLWEBAPP 应收账款管理页面脱敏截图',
+        title: '财务应收与催款工作台',
+        caption: '面向财务人员的日常业务场景，将记账、收支登记、应收核对、客户账期维护、催款跟进与出纳操作集中到统一工作台，减少多份 Excel 往返核对，让财务数据更清晰、催款进度更容易追踪。截图中的企业与金额信息已脱敏。',
+      },
+      {
+        src: `${import.meta.env.BASE_URL}images/zlwebapp-assembly-cost-anonymized.png`,
+        alt: 'ZLWEBAPP 装配入库标准成本估值页面脱敏截图',
+        title: '装配入库标准成本估值与异常核对',
+        caption: '基于用友 U8 的装配入库数量与企业当前制造标准成本，按日期和装配小组自动估算入库价值并生成趋势图；同时展示正式成本覆盖率，识别缺少标准成本的物料，并提供明细追溯与异常核对入口，辅助生产和财务快速发现成本数据问题。截图中的日期、批次与金额均已脱敏。',
+      },
+    ],
     work: [
       '重点参与出纳与应收管理，完成收支明细、客户账期、应收余额、业务应催款、订单收款及 Excel 导入导出等功能。',
       '对接用友 U8 ERP 与钉钉开放平台，实现发货、总账、组织、审批及考勤等业务数据的自动汇总与协同。',
       '参与生产执行、采购询价、样品台账、安全闭环和 KPI 考核等模块建设，将多部门业务规则落地为可追踪的系统流程。',
+      '建设装配入库标准成本估值功能，关联 U8 入库数据与正式成本批次，提供趋势分析、成本覆盖率、缺失原因定位和异常核对。',
       '负责线上问题定位与持续迭代，通过查询合并、缓存、异步加载和分页等方式优化复杂业务页面性能。',
     ],
     outcomes: [
@@ -322,15 +331,15 @@ function ProjectList() {
                     <ul className="project-outcomes">{project.outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
                   </>
                 )}
-                {project.showcase && (
-                  <figure className="project-showcase">
-                    <img src={project.showcase.src} alt={project.showcase.alt} loading="lazy" decoding="async" />
+                {project.showcases?.map((showcase) => (
+                  <figure className="project-showcase" key={showcase.title}>
+                    <img src={showcase.src} alt={showcase.alt} loading="lazy" decoding="async" />
                     <figcaption>
-                      <strong>{project.showcase.title}</strong>
-                      <span>{project.showcase.caption}</span>
+                      <strong>{showcase.title}</strong>
+                      <span>{showcase.caption}</span>
                     </figcaption>
                   </figure>
-                )}
+                ))}
                 <h4>技术栈</h4>
                 <div className="tech-row" aria-label="项目技术栈">
                   {project.stack.map((item) => <span key={item}>{item}</span>)}
