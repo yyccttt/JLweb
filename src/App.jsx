@@ -113,15 +113,21 @@ const views = {
 const projects = [
   {
     name: 'ZLWEBAPP',
-    type: '企业内部业务管理平台',
-    summary: '面向制造业企业，覆盖销售、采购、财务、库存、质量与安全巡检等业务，并连接用友 U8 与钉钉。',
+    type: '制造企业一体化业务管理平台',
+    summary: '参与制造企业内部管理平台的需求分析、功能开发与持续维护，围绕生产、采购、销售、财务、质量、仓储、安全及绩效等业务场景，推进原有 Excel 与人工协作流程的数字化改造。',
+    role: '全栈开发 · 需求对接 · 系统维护',
     work: [
-      '参与应收账款、客户账期、出纳催款及回款匹配等财务模块开发。',
-      '完善采购询价、订单跟踪、销售发货和库存分析等业务流程。',
-      '定位 SQL 查询、数据过滤与业务规则问题，支持 Excel 报表导出。',
-      '参与 Issue 开发、Pull Request 审查、冲突处理与功能合并。',
+      '重点参与出纳与应收管理，完成收支明细、客户账期、应收余额、业务应催款、订单收款及 Excel 导入导出等功能。',
+      '对接用友 U8 ERP 与钉钉开放平台，实现发货、总账、组织、审批及考勤等业务数据的自动汇总与协同。',
+      '参与生产执行、采购询价、样品台账、安全闭环和 KPI 考核等模块建设，将多部门业务规则落地为可追踪的系统流程。',
+      '负责线上问题定位与持续迭代，通过查询合并、缓存、异步加载和分页等方式优化复杂业务页面性能。',
     ],
-    stack: ['Python', 'Flask', 'SQL Server', 'U8 ERP', '钉钉开放平台', 'Pandas'],
+    outcomes: [
+      '覆盖生产、采购、销售、财务、质量、仓储、安全与绩效等核心场景',
+      '形成约 400 条可追溯 Git 提交，持续完成需求交付、修复与性能优化',
+      '减少重复录入与人工统计，让业务数据能够查询、提醒、导出和闭环追踪',
+    ],
+    stack: ['Python', 'Flask', 'SQL Server', 'JavaScript', 'Vue 2', 'U8 ERP', '钉钉开放平台', 'Git / Gitee'],
   },
   {
     name: 'LifeNuva',
@@ -299,8 +305,18 @@ function ProjectList() {
             </button>
             {isOpen && (
               <div className="project-detail">
+                {project.role && <div className="project-role">{project.role}</div>}
+                <h4>项目介绍</h4>
                 <p>{project.summary}</p>
+                <h4>个人职责</h4>
                 <ul>{project.work.map((item) => <li key={item}>{item}</li>)}</ul>
+                {project.outcomes && (
+                  <>
+                    <h4>项目成果</h4>
+                    <ul className="project-outcomes">{project.outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </>
+                )}
+                <h4>技术栈</h4>
                 <div className="tech-row" aria-label="项目技术栈">
                   {project.stack.map((item) => <span key={item}>{item}</span>)}
                 </div>

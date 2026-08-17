@@ -180,10 +180,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .project-heading small { margin-top: .18rem; color: var(--muted); font-size: .64rem; }
 .project-toggle { flex: none; color: var(--accent); font-size: .62rem; font-weight: 800; }
 .project-detail { padding: 0 1rem 1rem; animation: detail-in 260ms ease both; }
+.project-detail h4 { margin: .9rem 0 .4rem; color: var(--accent); font-size: .61rem; font-weight: 850; letter-spacing: .1em; }
+.project-detail h4:first-of-type { margin-top: .7rem; }
 .project-detail > p { margin: 0 0 .85rem; color: #46504b; font-size: .75rem; line-height: 1.65; }
 .project-detail ul { display: grid; gap: .45rem; margin: 0; padding: 0 0 0 1rem; color: #56615b; }
 .project-detail li { padding-left: .2rem; font-size: .7rem; line-height: 1.55; }
 .project-detail li::marker { color: var(--accent); }
+.project-role { display: inline-flex; align-items: center; min-height: 1.75rem; padding: .35rem .7rem; border: 1px solid rgba(95,128,111,.2); border-radius: 999px; color: #456557; background: rgba(225,239,232,.66); font-size: .62rem; font-weight: 800; }
+.project-outcomes { padding: .65rem .8rem .65rem 1.8rem !important; border-radius: .8rem; background: rgba(225,239,232,.42); }
 .tech-row { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
 .video-showcase { margin-top: 1.15rem; padding-top: 1rem; border-top: 1px solid var(--hairline); }
 .video-showcase-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .65rem; }
