@@ -116,6 +116,7 @@ const projects = [
     type: '制造企业一体化业务管理平台',
     summary: '参与制造企业内部管理平台的需求分析、功能开发与持续维护，围绕生产、采购、销售、财务、质量、仓储、安全及绩效等业务场景，推进原有 Excel 与人工协作流程的数字化改造。',
     role: '全栈开发 · 需求对接 · 系统维护',
+    examplesNote: '以下仅展示 ZLWEBAPP 的部分功能案例；项目还包含生产、采购、销售、财务、质量、仓储、安全、绩效等众多业务模块。',
     showcases: [
       {
         src: `${import.meta.env.BASE_URL}images/zlwebapp-receivables-anonymized.webp`,
@@ -161,13 +162,30 @@ const projects = [
   {
     name: 'LifeNuva',
     type: '会员与团队管理平台',
-    summary: '围绕会员、邀请关系、团队管理和财务审核场景建设的商业 Web 平台。',
-    work: [
-      '参与会员码激活、邀请码、团队关系与成员管理功能开发。',
-      '完善提现申请、财务审核及后台管理流程。',
-      '处理 Shopify 商城入口、环境配置和部署相关问题。',
+    summary: '根据客户需求独立完成的品牌官网与会员业务系统，覆盖会员注册激活、订单、积分奖励、团队关系、身份审核、提现、报表及运营后台，并与 Shopify 订单及折扣能力连接。',
+    role: '独立全栈开发 · 客户需求对接 · 部署交付',
+    examplesNote: '以下为 LifeNuva 会员端的代表性页面；完整系统还包括品牌官网、商品购买、订单、团队安置、积分奖励、身份审核、提现、报表和运营后台等功能。',
+    showcases: [
+      {
+        src: `${import.meta.env.BASE_URL}images/lifenuva-member-overview-anonymized.webp`,
+        alt: 'LifeNuva 会员中心概览页面脱敏截图',
+        height: 630,
+        title: '会员中心与业务总览',
+        caption: '为会员提供统一业务入口，集中展示会员激活状态、会员码、积分余额、奖励和订单概况，并连接商城、团队安置、积分转移、身份完善及提现等后续操作；支持中英文切换，让会员能够快速了解账户状态并进入常用功能。截图中的会员码、积分、订单及账户信息均已脱敏。',
+      },
     ],
-    stack: ['React', 'Next.js', 'Node.js', 'Shopify', 'Render', 'GitHub Issues'],
+    work: [
+      '独立完成会员注册、邀请码、会员激活、推荐关系与双轨团队安置等核心业务流程。',
+      '建设订单、积分、奖励、提现、身份审核、报表及运营后台，并处理敏感信息保护和操作审计。',
+      '对接 Shopify 商品、订单、退款与邀请折扣，同时接入 Stripe 支付相关流程。',
+      '负责从客户需求沟通、业务规则梳理、数据库设计到 Render 部署和交付验证的完整开发过程。',
+    ],
+    outcomes: [
+      '形成官网、会员端与运营后台相互连接的一体化业务系统',
+      '将复杂会员、团队、积分与奖励规则转化为可测试、可追踪的系统流程',
+      '建立自动化检查、数据库迁移和部署流程，支持持续迭代与交付验证',
+    ],
+    stack: ['Next.js', 'React', 'TypeScript', 'PostgreSQL', 'Drizzle ORM', 'Shopify', 'Stripe', 'Render'],
   },
   {
     name: '酒酿智能检测系统',
@@ -349,12 +367,12 @@ function ProjectList() {
                   <section className="project-examples" aria-label="代表性功能案例">
                     <div className="project-examples-heading">
                       <div><span>部分展示</span><strong>代表性功能案例</strong></div>
-                      <p>以下仅展示 ZLWEBAPP 的部分功能案例；项目还包含生产、采购、销售、财务、质量、仓储、安全、绩效等众多业务模块。</p>
+                      <p>{project.examplesNote || '以下为项目的部分代表性功能案例，更多能力请结合项目介绍与个人职责查看。'}</p>
                     </div>
                     {project.showcases.map((showcase) => (
                       <figure className="project-showcase" key={showcase.title}>
                         <a className="project-showcase-image" href={showcase.src} target="_blank" rel="noreferrer" aria-label={`查看${showcase.title}完整大图`}>
-                          <img src={showcase.src} alt={showcase.alt} width="1280" height="611" loading="lazy" decoding="async" fetchPriority="low" />
+                          <img src={showcase.src} alt={showcase.alt} width="1280" height={showcase.height || 611} loading="lazy" decoding="async" fetchPriority="low" />
                           <span>点击查看完整大图</span>
                         </a>
                         <figcaption>
