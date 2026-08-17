@@ -345,15 +345,23 @@ function ProjectList() {
                     <ul className="project-outcomes">{project.outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
                   </>
                 )}
-                {project.showcases?.map((showcase) => (
-                  <figure className="project-showcase" key={showcase.title}>
-                    <img src={showcase.src} alt={showcase.alt} loading="lazy" decoding="async" />
-                    <figcaption>
-                      <strong>{showcase.title}</strong>
-                      <span>{showcase.caption}</span>
-                    </figcaption>
-                  </figure>
-                ))}
+                {project.showcases && (
+                  <section className="project-examples" aria-label="代表性功能案例">
+                    <div className="project-examples-heading">
+                      <div><span>部分展示</span><strong>代表性功能案例</strong></div>
+                      <p>以下仅展示 ZLWEBAPP 的部分功能案例；项目还包含生产、采购、销售、财务、质量、仓储、安全、绩效等众多业务模块。</p>
+                    </div>
+                    {project.showcases.map((showcase) => (
+                      <figure className="project-showcase" key={showcase.title}>
+                        <img src={showcase.src} alt={showcase.alt} loading="lazy" decoding="async" />
+                        <figcaption>
+                          <strong>{showcase.title}</strong>
+                          <span>{showcase.caption}</span>
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </section>
+                )}
                 <h4>技术栈</h4>
                 <div className="tech-row" aria-label="项目技术栈">
                   {project.stack.map((item) => <span key={item}>{item}</span>)}
