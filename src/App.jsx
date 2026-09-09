@@ -32,9 +32,14 @@ class SceneErrorBoundary extends Component {
   render() {
     if (this.state.failed) {
       return (
-        <button className="model-retry" type="button" onClick={this.props.onRetry}>
-          3D 加载中断，点击重试
-        </button>
+        <section className="model-error" role="alert">
+          <strong>3D 场景暂时无法显示</strong>
+          <span>简历内容仍可正常查看。</span>
+          <div>
+            <button className="model-retry" type="button" onClick={this.props.onRetry}>重新加载</button>
+            <button className="model-browse" type="button" onClick={this.props.onBrowse}>直接查看项目</button>
+          </div>
+        </section>
       )
     }
     return this.props.children
@@ -283,8 +288,9 @@ function FloatingNav({ activeView, onChange }) {
             type="button"
             onClick={() => onChange(key)}
             aria-pressed={activeView === key}
+            aria-label={`${item.label}，${item.hint}`}
           >
-            <Icon size={18} weight={activeView === key ? 'fill' : 'regular'} />
+            <Icon size={18} weight={activeView === key ? 'fill' : 'regular'} aria-hidden="true" />
             <span><strong>{item.label}</strong><small>{item.hint}</small></span>
           </button>
         )
@@ -556,12 +562,24 @@ function PanelContent({ activeView }) {
 
 function InfoPanel({ activeView, onClose }) {
   const item = views[activeView]
+  const closeButtonRef = useRef(null)
+  const titleId = `panel-title-${activeView}`
+
+  useEffect(() => {
+    closeButtonRef.current?.focus()
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [activeView, onClose])
+
   return (
-    <aside className={`info-panel panel-${activeView}`} key={activeView} aria-live="polite">
-      <button className="panel-close" type="button" onClick={onClose} aria-label="关闭介绍"><X size={18} weight="bold" /></button>
+    <aside className={`info-panel panel-${activeView}`} key={activeView} role="dialog" aria-labelledby={titleId}>
+      <button ref={closeButtonRef} className="panel-close" type="button" onClick={onClose} aria-label="关闭介绍"><X size={18} weight="bold" /></button>
       <header className="panel-header">
         <p className="kicker">{item.kicker}</p>
-        <h1>{item.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
+        <h1 id={titleId}>{item.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
         <p className="panel-intro">{item.intro}</p>
       </header>
       <div className="panel-body"><PanelContent activeView={activeView} /></div>
@@ -675,9 +693,15 @@ export default function App() {
       </header>
       <div className="scene-layer" aria-label="袁诚的 3D 人物模型">
         <div className="scene-placeholder" aria-hidden="true" />
-        {!sceneReady && <div className="model-progress" role="status">3D 人物正在加载</div>}
+        {!sceneReady && (
+          <section className="scene-status" role="status" aria-live="polite">
+            <strong>正在加载 3D 简历</strong>
+            <span>无需等待，可以先查看项目与技术经历。</span>
+            <button type="button" onClick={() => handleViewChange('projects')}>先看项目经历</button>
+          </section>
+        )}
         {loadScene && (
-          <SceneErrorBoundary key={sceneAttempt} onRetry={retryScene}>
+          <SceneErrorBoundary key={sceneAttempt} onRetry={retryScene} onBrowse={() => handleViewChange('projects')}>
             <Suspense fallback={null}>
               <Scene3D activeView={activeView} views={views} onReady={() => setSceneReady(true)} />
             </Suspense>
